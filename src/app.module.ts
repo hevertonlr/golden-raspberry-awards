@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Movie } from './core/entities/movie.entity';
+import { MovieRepository } from './infrastructure/persistence/movie.repository';
+import { CsvLoaderService } from './infrastructure/csv-loader/csv-loader.service';
 
 @Module({
   imports: [
@@ -15,6 +17,12 @@ import { Movie } from './core/entities/movie.entity';
     TypeOrmModule.forFeature([Movie]),
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: 'IMovieRepository',
+      useClass: MovieRepository,
+    },
+    CsvLoaderService,
+  ],
 })
 export class AppModule {}
