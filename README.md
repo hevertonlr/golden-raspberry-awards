@@ -28,7 +28,6 @@ Esta é uma API RESTful desenvolvida em NestJS para gerenciar e consultar dados 
    - Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis:
      ```env
      CSV_FILE_PATH=data/movies.csv
-     DATABASE_PATH=data/database.sqlite
      CHUNK_SIZE=100
      ```
 
@@ -86,11 +85,10 @@ Retorna o produtor com o maior intervalo entre dois prêmios consecutivos e o pr
 
 O projeto utiliza as seguintes variáveis de ambiente, que devem ser configuradas no arquivo `.env`:
 
-| Variável        | Descrição                                           | Valor Padrão           |
-| --------------- | --------------------------------------------------- | ---------------------- |
-| `CSV_FILE_PATH` | Caminho para o arquivo CSV com os dados dos filmes. | `data/movies.csv`      |
-| `DATABASE_PATH` | Caminho para o arquivo do banco de dados SQLite.    | `data/database.sqlite` |
-| `CHUNK_SIZE`    | Tamanho do chunk para inserção de dados no banco.   | `100`                  |
+| Variável        | Descrição                                           | Valor Padrão      |
+| --------------- | --------------------------------------------------- | ----------------- |
+| `CSV_FILE_PATH` | Caminho para o arquivo CSV com os dados dos filmes. | `data/movies.csv` |
+| `CHUNK_SIZE`    | Tamanho do chunk para inserção de dados no banco.   | `100`             |
 
 ---
 
@@ -99,7 +97,7 @@ O projeto utiliza as seguintes variáveis de ambiente, que devem ser configurada
 O projeto está organizado da seguinte forma:
 
 ```
-data/                        # Arquivos de base (CSV, SQLITE)
+data/                        # Arquivos de base (CSV)
 src/
 ├── core/                    # Lógica de domínio (entidades, casos de uso, interfaces)
 ├── application/             # Camada de aplicação (serviços, controladores, DTOs)
@@ -115,7 +113,7 @@ src/
 Para executar os testes de integração, utilize o seguinte comando:
 
 ```bash
-pnpm test
+pnpm test:e2e
 ```
 
 ---

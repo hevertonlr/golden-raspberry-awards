@@ -12,7 +12,7 @@ import { MovieController } from './application/controllers/movie.controller';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: process.env.DATABASE_PATH ?? 'data/database.sqlite',
+      database: ':memory:',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),

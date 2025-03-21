@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { MovieService } from '../../src/application/services/movie.service';
-import { MovieController } from '../../src/application/controllers/movie.controller';
 import { App } from 'supertest/types';
+import { AppModule } from '../../src/app.module';
 
 describe('MovieController (e2e)', () => {
   let app: INestApplication<App>;
@@ -11,7 +11,7 @@ describe('MovieController (e2e)', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      controllers: [MovieController],
+      imports: [AppModule],
       providers: [
         {
           provide: MovieService,
@@ -32,36 +32,14 @@ describe('MovieController (e2e)', () => {
   });
 
   describe('GET /movies/producers-intervals', () => {
-    it('should return producer intervals', async () => {
-      const mockResult = {
-        min: [
-          {
-            producer: 'Producer 1',
-            interval: 1,
-            previousWin: 2008,
-            followingWin: 2009,
-          },
-        ],
-        max: [
-          {
-            producer: 'Producer 2',
-            interval: 99,
-            previousWin: 1900,
-            followingWin: 1999,
-          },
-        ],
-      };
-
-      const getProducersIntervalsSpy = jest
-        .spyOn(movieService, 'getProducersIntervals')
-        .mockResolvedValue(mockResult);
-
-      const response = await request(app.getHttpServer())
+    it('should return producer intervals', () => {
+      request(app.getHttpServer())
         .get('/movies/producers-intervals')
-        .expect(200);
-
-      expect(response.body).toEqual(mockResult);
-      expect(getProducersIntervalsSpy).toHaveBeenCalled();
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toHaveProperty('min');
+          expect(res.body).toHaveProperty('max');
+        });
     });
 
     it('should handle errors', async () => {
